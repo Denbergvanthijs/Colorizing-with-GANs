@@ -38,7 +38,7 @@ class BaseDataset():
             img = imread(val) if isinstance(val, str) else val
 
             # grayscale images
-            if np.sum(img[:,:,0] - img[:,:,1]) == 0 and np.sum(img[:,:,0] - img[:,:,2]) == 0:
+            if np.sum(img[:, :, 0] - img[:, :, 1]) == 0 and np.sum(img[:, :, 0] - img[:, :, 2]) == 0:
                 return None
 
             if self.augment and np.random.binomial(1, 0.5) == 1:
@@ -144,7 +144,8 @@ class TestDataset(BaseDataset):
 
     def __getitem__(self, index):
         path = self.data[index]
-        img = imread(path)
+        # Always read images as Greyscale
+        img = imread(path, mode='L')
         return path, img
 
     def load(self):
